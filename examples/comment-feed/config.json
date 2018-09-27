@@ -1,7 +1,7 @@
 {
   "locals": {
-    "name": "comments.steem.vc",
-    "description": "Watch all comments on the steem blockchain in real time!",
+    "name": "comments.dpaydev.io",
+    "description": "Watch all comments on the dpay blockchain in real time!",
     "author": "Johan Nordberg",
     "version": "1.0.1"
   },
@@ -15,7 +15,7 @@
     "watchify": false,
     "extensions": [".ts"],
     "plugins": ["tsify"],
-    "staticLibs": ["dsteem"],
+    "staticLibs": ["dpayts"],
     "staticLibsBundle": true
   },
   "stylus": {

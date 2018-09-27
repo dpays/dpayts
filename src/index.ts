@@ -1,5 +1,5 @@
 /**
- * @file dsteem exports.
+ * @file dpayts exports.
  * @author Johan Nordberg <code@johan-nordberg.com>
  * @license
  * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
@@ -39,14 +39,14 @@ export {utils}
 export * from './helpers/blockchain'
 export * from './helpers/database'
 
-export * from './steem/account'
-export * from './steem/asset'
-export * from './steem/block'
-export * from './steem/comment'
-export * from './steem/misc'
-export * from './steem/operation'
-export * from './steem/serializer'
-export * from './steem/transaction'
+export * from './dpay/account'
+export * from './dpay/asset'
+export * from './dpay/block'
+export * from './dpay/comment'
+export * from './dpay/misc'
+export * from './dpay/operation'
+export * from './dpay/serializer'
+export * from './dpay/transaction'
 
 export * from './client'
 export * from './crypto'

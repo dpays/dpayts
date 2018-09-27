@@ -1,5 +1,5 @@
 /**
- * @file Misc steem type definitions.
+ * @file Misc dpay type definitions.
  * @author Johan Nordberg <code@johan-nordberg.com>
  * @license
  * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
@@ -77,12 +77,12 @@ export class HexBuffer {
  */
 export interface ChainProperties {
     /**
-     * This fee, paid in STEEM, is converted into VESTING SHARES for the new account. Accounts
+     * This fee, paid in BEX, is converted into VESTING SHARES for the new account. Accounts
      * without vesting shares cannot earn usage rations and therefore are powerless. This minimum
      * fee requires all accounts to have some kind of commitment to the network that includes the
      * ability to vote and make transactions.
      *
-     * @note This has to be multiplied by `STEEMIT_CREATE_ACCOUNT_WITH_STEEM_MODIFIER`
+     * @note This has to be multiplied by `DPAY_CREATE_ACCOUNT_WITH_DPAY_MODIFIER`
      *       (defined as 30 on the main chain) to get the minimum fee needed to create an account.
      *
      */
@@ -93,9 +93,9 @@ export interface ChainProperties {
      */
     maximum_block_size: number // uint32_t
     /**
-     * The SBD interest percentage rate decided by witnesses, expressed 0 to 10000.
+     * The BBD interest percentage rate decided by witnesses, expressed 0 to 10000.
      */
-    sbd_interest_rate: number // uint16_t STEEMIT_100_PERCENT
+    bbd_interest_rate: number // uint16_t DPAY_100_PERCENT
 }
 
 export interface VestingDelegation {
@@ -155,25 +155,25 @@ export interface DynamicGlobalProperties {
      * Total asset held in confidential balances.
      */
     confidential_supply: Asset | string
-    current_sbd_supply: Asset | string
+    current_bbd_supply: Asset | string
     /**
      * Total asset held in confidential balances.
      */
-    confidential_sbd_supply: Asset | string
-    total_vesting_fund_steem: Asset | string
+    confidential_bbd_supply: Asset | string
+    total_vesting_fund_dpay: Asset | string
     total_vesting_shares: Asset | string
-    total_reward_fund_steem: Asset | string
+    total_reward_fund_dpay: Asset | string
     /**
      * The running total of REWARD^2.
      */
     total_reward_shares2: string
     pending_rewarded_vesting_shares: Asset | string
-    pending_rewarded_vesting_steem: Asset | string
+    pending_rewarded_vesting_dpay: Asset | string
     /**
-     * This property defines the interest rate that SBD deposits receive.
+     * This property defines the interest rate that BBD deposits receive.
      */
-    sbd_interest_rate: number
-    sbd_print_rate: number
+    bbd_interest_rate: number
+    bbd_print_rate: number
     /**
      *  Average block size is updated every block to be:
      *
@@ -207,7 +207,7 @@ export interface DynamicGlobalProperties {
     /**
      * The maximum bandwidth the blockchain can support is:
      *
-     *    max_bandwidth = maximum_block_size * STEEMIT_BANDWIDTH_AVERAGE_WINDOW_SECONDS / STEEMIT_BLOCK_INTERVAL
+     *    max_bandwidth = maximum_block_size * DPAY_BANDWIDTH_AVERAGE_WINDOW_SECONDS / DPAY_BLOCK_INTERVAL
      *
      * The maximum virtual bandwidth is:
      *
@@ -216,7 +216,7 @@ export interface DynamicGlobalProperties {
     max_virtual_bandwidth: Bignum
     /**
      * Any time average_block_size <= 50% maximum_block_size this value grows by 1 until it
-     * reaches STEEMIT_MAX_RESERVE_RATIO.  Any time average_block_size is greater than
+     * reaches DPAY_MAX_RESERVE_RATIO.  Any time average_block_size is greater than
      * 50% it falls by 1%.  Upward adjustments happen once per round, downward adjustments
      * happen every block.
      */
@@ -233,10 +233,10 @@ export interface DynamicGlobalProperties {
  * Return the vesting share price.
  */
 export function getVestingSharePrice(props: DynamicGlobalProperties): Price {
-    const totalVestingFund = Asset.from(props.total_vesting_fund_steem)
+    const totalVestingFund = Asset.from(props.total_vesting_fund_dpay)
     const totalVestingShares = Asset.from(props.total_vesting_shares)
     if (totalVestingFund.amount === 0 || totalVestingShares.amount === 0) {
-        return new Price(new Asset(1, 'VESTS'), new Asset(1, 'STEEM'))
+        return new Price(new Asset(1, 'VESTS'), new Asset(1, 'BEX'))
     }
     return new Price(totalVestingShares, totalVestingFund)
 }

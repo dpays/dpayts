@@ -1,5 +1,5 @@
 /**
- * @file Steem protocol serialization.
+ * @file DPay protocol serialization.
  * @author Johan Nordberg <code@johan-nordberg.com>
  * @license
  * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
@@ -202,7 +202,7 @@ const SignedBlockHeaderSerializer = ObjectSerializer([
 const ChainPropertiesSerializer = ObjectSerializer([
     ['account_creation_fee', AssetSerializer],
     ['maximum_block_size', UInt32Serializer],
-    ['sbd_interest_rate', UInt16Serializer],
+    ['bbd_interest_rate', UInt16Serializer],
 ])
 
 const OperationDataSerializer = (operationId: number, definitions: Array<[string, Serializer]>) => {
@@ -278,8 +278,8 @@ OperationSerializers.claim_account = OperationDataSerializer(22, [
 
 OperationSerializers.claim_reward_balance = OperationDataSerializer(39, [
     ['account', StringSerializer],
-    ['reward_steem', AssetSerializer],
-    ['reward_sbd', AssetSerializer],
+    ['reward_dpay', AssetSerializer],
+    ['reward_bbd', AssetSerializer],
     ['reward_vests', AssetSerializer],
 ])
 
@@ -297,7 +297,7 @@ OperationSerializers.comment_options = OperationDataSerializer(19, [
     ['author', StringSerializer],
     ['permlink', StringSerializer],
     ['max_accepted_payout', AssetSerializer],
-    ['percent_steem_dollars', UInt16Serializer],
+    ['percent_dpay_dollars', UInt16Serializer],
     ['allow_votes', BooleanSerializer],
     ['allow_curation_rewards', BooleanSerializer],
     ['extensions', ArraySerializer(
@@ -386,8 +386,8 @@ OperationSerializers.escrow_release = OperationDataSerializer(29, [
     ['who', StringSerializer],
     ['receiver', StringSerializer],
     ['escrow_id', UInt32Serializer],
-    ['sbd_amount', AssetSerializer],
-    ['steem_amount', AssetSerializer],
+    ['bbd_amount', AssetSerializer],
+    ['dpay_amount', AssetSerializer],
 ])
 
 OperationSerializers.escrow_transfer = OperationDataSerializer(27, [
@@ -395,8 +395,8 @@ OperationSerializers.escrow_transfer = OperationDataSerializer(27, [
     ['to', StringSerializer],
     ['agent', StringSerializer],
     ['escrow_id', UInt32Serializer],
-    ['sbd_amount', AssetSerializer],
-    ['steem_amount', AssetSerializer],
+    ['bbd_amount', AssetSerializer],
+    ['dpay_amount', AssetSerializer],
     ['fee', AssetSerializer],
     ['ratification_deadline', DateSerializer],
     ['escrow_expiration', DateSerializer],

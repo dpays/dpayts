@@ -18,7 +18,7 @@ describe('broadcast', function() {
         [acc1, acc2] = await getTestnetAccounts()
     })
 
-    const postPermlink = `dsteem-test-${ randomString(7) }`
+    const postPermlink = `dpayts-test-${ randomString(7) }`
 
     it('should broadcast', async function() {
         const key = PrivateKey.fromString(acc1.posting)
@@ -49,7 +49,7 @@ describe('broadcast', function() {
             author: acc2.username,
             permlink: `${ postPermlink }-botcomment-1`,
             title: 'Comments has titles?',
-            body: `Amazing post! Revoted upsteemed and trailing! @${ acc2.username }`,
+            body: `Amazing post! Revoted upvoted and trailing! @${ acc2.username }`,
             json_metadata: '',
         }, key)
         const votePromise = client.broadcast.vote({

@@ -37,9 +37,9 @@ import * as assert from 'assert'
 
 import {Client} from './../client'
 import {cryptoUtils, PrivateKey, PublicKey} from './../crypto'
-import {Authority, AuthorityType} from './../steem/account'
-import {Asset} from './../steem/asset'
-import {getVestingSharePrice, HexBuffer} from './../steem/misc'
+import {Authority, AuthorityType} from './../dpay/account'
+import {Asset} from './../dpay/asset'
+import {getVestingSharePrice, HexBuffer} from './../dpay/misc'
 import {
     AccountCreateOperation,
     AccountCreateWithDelegationOperation,
@@ -53,8 +53,8 @@ import {
     Operation,
     TransferOperation,
     VoteOperation,
-} from './../steem/operation'
-import {SignedTransaction, Transaction, TransactionConfirmation} from './../steem/transaction'
+} from './../dpay/operation'
+import {SignedTransaction, Transaction, TransactionConfirmation} from './../dpay/transaction'
 
 export interface CreateAccountOptions {
     /**

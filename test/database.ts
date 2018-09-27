@@ -22,24 +22,24 @@ describe('database api', function() {
         assert.deepEqual(Object.keys(result), [
             'head_block_number', 'head_block_id', 'time', 'current_witness',
             'total_pow', 'num_pow_witnesses', 'virtual_supply', 'current_supply',
-            'confidential_supply', 'current_sbd_supply', 'confidential_sbd_supply',
-            'total_vesting_fund_steem', 'total_vesting_shares', 'total_reward_fund_steem',
-            'total_reward_shares2', 'pending_rewarded_vesting_shares', 'pending_rewarded_vesting_steem',
-            'sbd_interest_rate', 'sbd_print_rate', 'maximum_block_size', 'current_aslot',
+            'confidential_supply', 'current_bbd_supply', 'confidential_bbd_supply',
+            'total_vesting_fund_dpay', 'total_vesting_shares', 'total_reward_fund_dpay',
+            'total_reward_shares2', 'pending_rewarded_vesting_shares', 'pending_rewarded_vesting_dpay',
+            'bbd_interest_rate', 'bbd_print_rate', 'maximum_block_size', 'current_aslot',
             'recent_slots_filled', 'participation_count', 'last_irreversible_block_num',
             'vote_power_reserve_rate', 'delegation_return_period', 'reverse_auction_seconds',
-            'sbd_stop_percent', 'sbd_start_percent', 'average_block_size',
+            'bbd_stop_percent', 'bbd_start_percent', 'average_block_size',
             'current_reserve_ratio', 'max_virtual_bandwidth'
         ])
     })
 
     it('getConfig', async function() {
         const result = await client.database.getConfig()
-        const r = (key: string) => result['STEEM_'+key]
+        const r = (key: string) => result['DPAY_'+key]
         serverConfig = result
         // also test some assumptions made throughout the code
         const conf = await liveClient.database.getConfig()
-        assert.equal(r('CREATE_ACCOUNT_WITH_STEEM_MODIFIER'), 30)
+        assert.equal(r('CREATE_ACCOUNT_WITH_DPAY_MODIFIER'), 30)
         assert.equal(r('CREATE_ACCOUNT_DELEGATION_RATIO'), 5)
         assert.equal(r('100_PERCENT'), 10000)
         assert.equal(r('1_PERCENT'), 100)
@@ -57,13 +57,13 @@ describe('database api', function() {
         const result = await client.database.getBlock(1)
         assert.equal('0000000000000000000000000000000000000000', result.previous)
         assert.equal(
-            serverConfig['STEEM_INIT_PUBLIC_KEY_STR'],
+            serverConfig['DPAY_INIT_PUBLIC_KEY_STR'],
             result.signing_key
         )
     })
 
     /*
-    // TODO: disabled for steem#2936
+    // TODO: disabled for dpay#2936
     it('getOperations', async function() {
         const result = await liveClient.database.getOperations(1)
         assert.equal(result.length, 1)
@@ -74,7 +74,7 @@ describe('database api', function() {
     it('getDiscussions', async function() {
         const r1 = await liveClient.database.getDiscussions('comments', {
             start_author: 'almost-digital',
-            start_permlink: 're-pal-re-almost-digital-dsteem-a-strongly-typed-steem-client-library-20170702t131034262z',
+            start_permlink: 're-pal-re-almost-digital-dpayts-a-strongly-typed-dpay-client-library-20170702t131034262z',
             tag: 'almost-digital',
             limit: 1,
         })
@@ -95,19 +95,19 @@ describe('database api', function() {
 
     it('getChainProperties', async function() {
         const props = await liveClient.database.getChainProperties()
-        assert.equal(Asset.from(props.account_creation_fee).symbol, 'STEEM')
+        assert.equal(Asset.from(props.account_creation_fee).symbol, 'BEX')
     })
 
     it('getCurrentMedianHistoryPrice', async function() {
         const price = await liveClient.database.getCurrentMedianHistoryPrice()
-        assert.equal(Asset.from(price.base).symbol, 'SBD')
-        assert.equal(price.quote.symbol, 'STEEM')
+        assert.equal(Asset.from(price.base).symbol, 'BBD')
+        assert.equal(price.quote.symbol, 'BEX')
     })
 
     it('getVestingDelegations', async function() {
         this.slow(5 * 1000)
-        const [delegation] = await liveClient.database.getVestingDelegations('steem', '', 1)
-        assert.equal(delegation.delegator, 'steem')
+        const [delegation] = await liveClient.database.getVestingDelegations('bex', '', 1)
+        assert.equal(delegation.delegator, 'bex')
         assert.equal(typeof delegation.id, 'number')
         assert.equal(Asset.from(delegation.vesting_shares).symbol, 'VESTS')
     })

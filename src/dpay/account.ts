@@ -1,5 +1,5 @@
 /**
- * @file Steem account type definitions.
+ * @file DPay account type definitions.
  * @author Johan Nordberg <code@johan-nordberg.com>
  * @license
  * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
@@ -102,19 +102,19 @@ export interface Account {
     last_vote_time: string // time_point_sec
     balance: string | Asset
     savings_balance: string | Asset
-    sbd_balance: string | Asset
-    sbd_seconds: string // uint128_t
-    sbd_seconds_last_update: string // time_point_sec
-    sbd_last_interest_payment: string // time_point_sec
-    savings_sbd_balance: string | Asset // asset
-    savings_sbd_seconds: string // uint128_t
-    savings_sbd_seconds_last_update: string // time_point_sec
-    savings_sbd_last_interest_payment: string // time_point_sec
+    bbd_balance: string | Asset
+    bbd_seconds: string // uint128_t
+    bbd_seconds_last_update: string // time_point_sec
+    bbd_last_interest_payment: string // time_point_sec
+    savings_bbd_balance: string | Asset // asset
+    savings_bbd_seconds: string // uint128_t
+    savings_bbd_seconds_last_update: string // time_point_sec
+    savings_bbd_last_interest_payment: string // time_point_sec
     savings_withdraw_requests: number // uint8_t
-    reward_sbd_balance: string | Asset
-    reward_steem_balance: string | Asset
+    reward_bbd_balance: string | Asset
+    reward_dpay_balance: string | Asset
     reward_vesting_balance: string | Asset
-    reward_vesting_steem: string | Asset
+    reward_vesting_dpay: string | Asset
     curation_rewards: number | string // share_type
     posting_rewards: number | string // share_type
     vesting_shares: string | Asset
@@ -139,7 +139,7 @@ export interface Account {
 
 export interface ExtendedAccount extends Account {
     /**
-     * Convert vesting_shares to vesting steem.
+     * Convert vesting_shares to vesting bex.
      */
     vesting_balance: string | Asset
     reputation: string | number // share_type

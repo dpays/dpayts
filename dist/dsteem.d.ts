@@ -1,11 +1,11 @@
-declare module 'dsteem/version' {
+declare module 'dpayts/version' {
 	 const _default: string;
 	export default _default;
 
 }
-declare module 'dsteem/steem/asset' {
+declare module 'dpayts/dpay/asset' {
 	/**
-	 * @file Steem asset type definitions and helpers.
+	 * @file dPay asset type definitions and helpers.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
 	 * @license
 	 * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
@@ -41,15 +41,15 @@ declare module 'dsteem/steem/asset' {
 	/**
 	 * Asset symbol string.
 	 */
-	export type AssetSymbol = 'STEEM' | 'VESTS' | 'SBD' | 'TESTS' | 'TBD';
+	export type AssetSymbol = 'BEX' | 'VESTS' | 'BBD' | 'TESTS' | 'TBD';
 	/**
-	 * Class representing a steem asset, e.g. `1.000 STEEM` or `12.112233 VESTS`.
+	 * Class representing a dPay asset, e.g. `1.000 BEX` or `12.112233 VESTS`.
 	 */
 	export class Asset {
 	    readonly amount: number;
 	    readonly symbol: AssetSymbol;
 	    /**
-	     * Create a new Asset instance from a string, e.g. `42.000 STEEM`.
+	     * Create a new Asset instance from a string, e.g. `42.000 BEX`.
 	     */
 	    static fromString(string: string, expectedSymbol?: AssetSymbol): Asset;
 	    /**
@@ -72,7 +72,7 @@ declare module 'dsteem/steem/asset' {
 	     */
 	    getPrecision(): number;
 	    /**
-	     * Return a string representation of this asset, e.g. `42.000 STEEM`.
+	     * Return a string representation of this asset, e.g. `42.000 BEX`.
 	     */
 	    toString(): string;
 	    /**
@@ -138,9 +138,9 @@ declare module 'dsteem/steem/asset' {
 	}
 
 }
-declare module 'dsteem/steem/misc' {
+declare module 'dpayts/dpay/misc' {
 	/**
-	 * @file Misc steem type definitions.
+	 * @file Misc dpay type definitions.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
 	 * @license
 	 * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
@@ -174,7 +174,7 @@ declare module 'dsteem/steem/misc' {
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
 	/// <reference types="node" />
-	import { Asset, Price } from 'dsteem/steem/asset';
+	import { Asset, Price } from 'dpayts/dpay/asset';
 	/**
 	 * Large number that may be unsafe to represent natively in JavaScript.
 	 */
@@ -197,12 +197,12 @@ declare module 'dsteem/steem/misc' {
 	 */
 	export interface ChainProperties {
 	    /**
-	     * This fee, paid in STEEM, is converted into VESTING SHARES for the new account. Accounts
+	     * This fee, paid in BEX, is converted into VESTING SHARES for the new account. Accounts
 	     * without vesting shares cannot earn usage rations and therefore are powerless. This minimum
 	     * fee requires all accounts to have some kind of commitment to the network that includes the
 	     * ability to vote and make transactions.
 	     *
-	     * @note This has to be multiplied by `STEEMIT_CREATE_ACCOUNT_WITH_STEEM_MODIFIER`
+	     * @note This has to be multiplied by `DPAY_CREATE_ACCOUNT_WITH_DPAY_MODIFIER`
 	     *       (defined as 30 on the main chain) to get the minimum fee needed to create an account.
 	     *
 	     */
@@ -213,9 +213,9 @@ declare module 'dsteem/steem/misc' {
 	     */
 	    maximum_block_size: number;
 	    /**
-	     * The SBD interest percentage rate decided by witnesses, expressed 0 to 10000.
+	     * The BBD interest percentage rate decided by witnesses, expressed 0 to 10000.
 	     */
-	    sbd_interest_rate: number;
+	    bbd_interest_rate: number;
 	}
 	export interface VestingDelegation {
 	    /**
@@ -273,25 +273,25 @@ declare module 'dsteem/steem/misc' {
 	     * Total asset held in confidential balances.
 	     */
 	    confidential_supply: Asset | string;
-	    current_sbd_supply: Asset | string;
+	    current_bbd_supply: Asset | string;
 	    /**
 	     * Total asset held in confidential balances.
 	     */
-	    confidential_sbd_supply: Asset | string;
-	    total_vesting_fund_steem: Asset | string;
+	    confidential_bbd_supply: Asset | string;
+	    total_vesting_fund_dpay: Asset | string;
 	    total_vesting_shares: Asset | string;
-	    total_reward_fund_steem: Asset | string;
+	    total_reward_fund_dpay: Asset | string;
 	    /**
 	     * The running total of REWARD^2.
 	     */
 	    total_reward_shares2: string;
 	    pending_rewarded_vesting_shares: Asset | string;
-	    pending_rewarded_vesting_steem: Asset | string;
+	    pending_rewarded_vesting_dpay: Asset | string;
 	    /**
-	     * This property defines the interest rate that SBD deposits receive.
+	     * This property defines the interest rate that BBD deposits receive.
 	     */
-	    sbd_interest_rate: number;
-	    sbd_print_rate: number;
+	    bbd_interest_rate: number;
+	    bbd_print_rate: number;
 	    /**
 	     *  Average block size is updated every block to be:
 	     *
@@ -325,7 +325,7 @@ declare module 'dsteem/steem/misc' {
 	    /**
 	     * The maximum bandwidth the blockchain can support is:
 	     *
-	     *    max_bandwidth = maximum_block_size * STEEMIT_BANDWIDTH_AVERAGE_WINDOW_SECONDS / STEEMIT_BLOCK_INTERVAL
+	     *    max_bandwidth = maximum_block_size * DPAY_BANDWIDTH_AVERAGE_WINDOW_SECONDS / DPAY_BLOCK_INTERVAL
 	     *
 	     * The maximum virtual bandwidth is:
 	     *
@@ -334,7 +334,7 @@ declare module 'dsteem/steem/misc' {
 	    max_virtual_bandwidth: Bignum;
 	    /**
 	     * Any time average_block_size <= 50% maximum_block_size this value grows by 1 until it
-	     * reaches STEEMIT_MAX_RESERVE_RATIO.  Any time average_block_size is greater than
+	     * reaches DPAY_MAX_RESERVE_RATIO.  Any time average_block_size is greater than
 	     * 50% it falls by 1%.  Upward adjustments happen once per round, downward adjustments
 	     * happen every block.
 	     */
@@ -352,9 +352,9 @@ declare module 'dsteem/steem/misc' {
 	export function getVestingSharePrice(props: DynamicGlobalProperties): Price;
 
 }
-declare module 'dsteem/steem/serializer' {
+declare module 'dpayts/dpay/serializer' {
 	/**
-	 * @file Steem protocol serialization.
+	 * @file DPay protocol serialization.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
 	 * @license
 	 * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
@@ -389,10 +389,10 @@ declare module 'dsteem/steem/serializer' {
 	 */
 	/// <reference types="node" />
 	import * as ByteBuffer from 'bytebuffer';
-	import { PublicKey } from 'dsteem/crypto';
-	import { Asset } from 'dsteem/steem/asset';
-	import { HexBuffer } from 'dsteem/steem/misc';
-	import { Operation } from 'dsteem/steem/operation';
+	import { PublicKey } from 'dpayts/crypto';
+	import { Asset } from 'dpayts/dpay/asset';
+	import { HexBuffer } from 'dpayts/dpay/misc';
+	import { Operation } from 'dpayts/dpay/operation';
 	export type Serializer = (buffer: ByteBuffer, data: any) => void;
 	export const Types: {
 	    Array: (itemSerializer: Serializer) => (buffer: ByteBuffer, data: any[]) => void;
@@ -430,7 +430,7 @@ declare module 'dsteem/steem/serializer' {
 	};
 
 }
-declare module 'dsteem/utils' {
+declare module 'dpayts/utils' {
 	/**
 	 * @file Misc utility functions.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
@@ -489,9 +489,9 @@ declare module 'dsteem/utils' {
 	export function retryingFetch(url: string, opts: any, timeout: number, backoff: (tries: number) => number, fetchTimeout?: (tries: number) => number): Promise<any>;
 
 }
-declare module 'dsteem/crypto' {
+declare module 'dpayts/crypto' {
 	/**
-	 * @file Steem crypto helpers.
+	 * @file DPay crypto helpers.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
 	 * @license
 	 * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
@@ -525,7 +525,7 @@ declare module 'dsteem/crypto' {
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
 	/// <reference types="node" />
-	import { SignedTransaction, Transaction } from 'dsteem/steem/transaction';
+	import { SignedTransaction, Transaction } from 'dpayts/dpay/transaction';
 	/**
 	 * Network id used in WIF-encoding.
 	 */
@@ -638,9 +638,9 @@ declare module 'dsteem/crypto' {
 	export {};
 
 }
-declare module 'dsteem/steem/account' {
+declare module 'dpayts/dpay/account' {
 	/**
-	 * @file Steem account type definitions.
+	 * @file DPay account type definitions.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
 	 * @license
 	 * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
@@ -673,8 +673,8 @@ declare module 'dsteem/steem/account' {
 	 * You acknowledge that this software is not designed, licensed or intended for use
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
-	import { PublicKey } from 'dsteem/crypto';
-	import { Asset } from 'dsteem/steem/asset';
+	import { PublicKey } from 'dpayts/crypto';
+	import { Asset } from 'dpayts/dpay/asset';
 	export interface AuthorityType {
 	    weight_threshold: number;
 	    account_auths: Array<[string, number]>;
@@ -718,19 +718,19 @@ declare module 'dsteem/steem/account' {
 	    last_vote_time: string;
 	    balance: string | Asset;
 	    savings_balance: string | Asset;
-	    sbd_balance: string | Asset;
-	    sbd_seconds: string;
-	    sbd_seconds_last_update: string;
-	    sbd_last_interest_payment: string;
-	    savings_sbd_balance: string | Asset;
-	    savings_sbd_seconds: string;
-	    savings_sbd_seconds_last_update: string;
-	    savings_sbd_last_interest_payment: string;
+	    bbd_balance: string | Asset;
+	    bbd_seconds: string;
+	    bbd_seconds_last_update: string;
+	    bbd_last_interest_payment: string;
+	    savings_bbd_balance: string | Asset;
+	    savings_bbd_seconds: string;
+	    savings_bbd_seconds_last_update: string;
+	    savings_bbd_last_interest_payment: string;
 	    savings_withdraw_requests: number;
-	    reward_sbd_balance: string | Asset;
-	    reward_steem_balance: string | Asset;
+	    reward_bbd_balance: string | Asset;
+	    reward_dpay_balance: string | Asset;
 	    reward_vesting_balance: string | Asset;
-	    reward_vesting_steem: string | Asset;
+	    reward_vesting_dpay: string | Asset;
 	    curation_rewards: number | string;
 	    posting_rewards: number | string;
 	    vesting_shares: string | Asset;
@@ -754,7 +754,7 @@ declare module 'dsteem/steem/account' {
 	}
 	export interface ExtendedAccount extends Account {
 	    /**
-	     * Convert vesting_shares to vesting steem.
+	     * Convert vesting_shares to vesting dpay.
 	     */
 	    vesting_balance: string | Asset;
 	    reputation: string | number;
@@ -781,9 +781,9 @@ declare module 'dsteem/steem/account' {
 	}
 
 }
-declare module 'dsteem/steem/comment' {
+declare module 'dpayts/dpay/comment' {
 	/**
-	 * @file Steem type definitions related to comments and posting.
+	 * @file DPay type definitions related to comments and posting.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
 	 * @license
 	 * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
@@ -816,7 +816,7 @@ declare module 'dsteem/steem/comment' {
 	 * You acknowledge that this software is not designed, licensed or intended for use
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
-	import { Asset } from 'dsteem/steem/asset';
+	import { Asset } from 'dpayts/dpay/asset';
 	export interface Comment {
 	    id: number;
 	    category: string;
@@ -847,7 +847,7 @@ declare module 'dsteem/steem/comment' {
 	    net_votes: number;
 	    root_comment: number;
 	    max_accepted_payout: string;
-	    percent_steem_dollars: number;
+	    percent_dpay_dollars: number;
 	    allow_replies: boolean;
 	    allow_votes: boolean;
 	    allow_curation_rewards: boolean;
@@ -876,9 +876,9 @@ declare module 'dsteem/steem/comment' {
 	}
 
 }
-declare module 'dsteem/steem/operation' {
+declare module 'dpayts/dpay/operation' {
 	/**
-	 * @file Steem operation type definitions.
+	 * @file DPay operation type definitions.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
 	 * @license
 	 * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
@@ -912,12 +912,12 @@ declare module 'dsteem/steem/operation' {
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
 	/// <reference types="node" />
-	import { PublicKey } from 'dsteem/crypto';
-	import { AuthorityType } from 'dsteem/steem/account';
-	import { Asset, Price } from 'dsteem/steem/asset';
-	import { SignedBlockHeader } from 'dsteem/steem/block';
-	import { BeneficiaryRoute } from 'dsteem/steem/comment';
-	import { ChainProperties, HexBuffer } from 'dsteem/steem/misc';
+	import { PublicKey } from 'dpayts/crypto';
+	import { AuthorityType } from 'dpayts/dpay/account';
+	import { Asset, Price } from 'dpayts/dpay/asset';
+	import { SignedBlockHeader } from 'dpayts/dpay/block';
+	import { BeneficiaryRoute } from 'dpayts/dpay/comment';
+	import { ChainProperties, HexBuffer } from 'dpayts/dpay/misc';
 	/**
 	 * Operation name.
 	 */
@@ -1047,8 +1047,8 @@ declare module 'dsteem/steem/operation' {
 	    0: 'claim_reward_balance';
 	    1: {
 	        account: string;
-	        reward_steem: string | Asset;
-	        reward_sbd: string | Asset;
+	        reward_dpay: string | Asset;
+	        reward_bbd: string | Asset;
 	        reward_vests: string | Asset;
 	    };
 	}
@@ -1080,10 +1080,10 @@ declare module 'dsteem/steem/operation' {
 	    1: {
 	        author: string;
 	        permlink: string;
-	        /** SBD value of the maximum payout this post will receive. */
+	        /** BBD value of the maximum payout this post will receive. */
 	        max_accepted_payout: Asset | string;
-	        /** The percent of Steem Dollars to key, unkept amounts will be received as Steem Power. */
-	        percent_steem_dollars: number;
+	        /** The percent of DPay Dollars to key, unkept amounts will be received as DPay Power. */
+	        percent_dpay_dollars: number;
 	        /** Whether to allow post to receive votes. */
 	        allow_votes: boolean;
 	        /** Whether to allow post to recieve curation rewards. */
@@ -1248,13 +1248,13 @@ declare module 'dsteem/steem/operation' {
 	        receiver: string;
 	        escrow_id: number;
 	        /**
-	         * The amount of sbd to release.
+	         * The amount of bbd to release.
 	         */
-	        sbd_amount: Asset | string;
+	        bbd_amount: Asset | string;
 	        /**
-	         * The amount of steem to release.
+	         * The amount of dpay to release.
 	         */
-	        steem_amount: Asset | string;
+	        dpay_amount: Asset | string;
 	    };
 	}
 	/**
@@ -1282,8 +1282,8 @@ declare module 'dsteem/steem/operation' {
 	        to: string;
 	        agent: string;
 	        escrow_id: number;
-	        sbd_amount: Asset | string;
-	        steem_amount: Asset | string;
+	        bbd_amount: Asset | string;
+	        dpay_amount: Asset | string;
 	        fee: Asset | string;
 	        ratification_deadline: string;
 	        escrow_expiration: string;
@@ -1428,14 +1428,14 @@ declare module 'dsteem/steem/operation' {
 	/**
 	 * This operation is used to report a miner who signs two blocks
 	 * at the same time. To be valid, the violation must be reported within
-	 * STEEMIT_MAX_WITNESSES blocks of the head block (1 round) and the
+	 * DPAY_MAX_WITNESSES blocks of the head block (1 round) and the
 	 * producer must be in the ACTIVE witness set.
 	 *
 	 * Users not in the ACTIVE witness set should not have to worry about their
 	 * key getting compromised and being used to produced multiple blocks so
-	 * the attacker can report it and steel their vesting steem.
+	 * the attacker can report it and steel their vesting dpay.
 	 *
-	 * The result of the operation is to transfer the full VESTING STEEM balance
+	 * The result of the operation is to transfer the full VESTING BEX balance
 	 * of the block producer to the reporter.
 	 */
 	export interface ReportOverProductionOperation extends Operation {
@@ -1524,7 +1524,7 @@ declare module 'dsteem/steem/operation' {
 	 * request for the funds to be transferred directly to another account's
 	 * balance rather than the withdrawing account. In addition, those funds
 	 * can be immediately vested again, circumventing the conversion from
-	 * vests to steem and back, guaranteeing they maintain their value.
+	 * vests to dpay and back, guaranteeing they maintain their value.
 	 */
 	export interface SetWithdrawVestingRouteOperation extends Operation {
 	    0: 'set_withdraw_vesting_route';
@@ -1536,7 +1536,7 @@ declare module 'dsteem/steem/operation' {
 	    };
 	}
 	/**
-	 * Transfers STEEM from one account to another.
+	 * Transfers BEX from one account to another.
 	 */
 	export interface TransferOperation extends Operation {
 	    0: 'transfer';
@@ -1550,7 +1550,7 @@ declare module 'dsteem/steem/operation' {
 	         */
 	        to: string;
 	        /**
-	         * Amount of STEEM or SBD to send.
+	         * Amount of BEX or BBD to send.
 	         */
 	        amount: string | Asset;
 	        /**
@@ -1580,7 +1580,7 @@ declare module 'dsteem/steem/operation' {
 	    };
 	}
 	/**
-	 * This operation converts STEEM into VFS (Vesting Fund Shares) at
+	 * This operation converts BEX into VFS (Vesting Fund Shares) at
 	 * the current exchange rate. With this operation it is possible to
 	 * give another account vesting shares so that faucets can
 	 * pre-fund new accounts with vesting shares.
@@ -1592,7 +1592,7 @@ declare module 'dsteem/steem/operation' {
 	        from: string;
 	        to: string;
 	        /**
-	         * Amount to power up, must be STEEM.
+	         * Amount to power up, must be BEX.
 	         */
 	        amount: string | Asset;
 	    };
@@ -1604,7 +1604,7 @@ declare module 'dsteem/steem/operation' {
 	        author: string;
 	        permlink: string;
 	        /**
-	         * Voting weight, 100% = 10000 (STEEMIT_100_PERCENT).
+	         * Voting weight, 100% = 10000 (DPAY_100_PERCENT).
 	         */
 	        weight: number;
 	    };
@@ -1663,9 +1663,9 @@ declare module 'dsteem/steem/operation' {
 	}
 
 }
-declare module 'dsteem/steem/transaction' {
+declare module 'dpayts/dpay/transaction' {
 	/**
-	 * @file Steem transaction type definitions.
+	 * @file DPay transaction type definitions.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
 	 * @license
 	 * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
@@ -1698,7 +1698,7 @@ declare module 'dsteem/steem/transaction' {
 	 * You acknowledge that this software is not designed, licensed or intended for use
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
-	import { Operation } from 'dsteem/steem/operation';
+	import { Operation } from 'dpayts/dpay/operation';
 	export interface Transaction {
 	    ref_block_num: number;
 	    ref_block_prefix: number;
@@ -1717,9 +1717,9 @@ declare module 'dsteem/steem/transaction' {
 	}
 
 }
-declare module 'dsteem/steem/block' {
+declare module 'dpayts/dpay/block' {
 	/**
-	 * @file Steem block type definitions.
+	 * @file DPay block type definitions.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
 	 * @license
 	 * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
@@ -1752,7 +1752,7 @@ declare module 'dsteem/steem/block' {
 	 * You acknowledge that this software is not designed, licensed or intended for use
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
-	import { Transaction } from 'dsteem/steem/transaction';
+	import { Transaction } from 'dpayts/dpay/transaction';
 	/**
 	 * Unsigned block header.
 	 */
@@ -1780,9 +1780,9 @@ declare module 'dsteem/steem/block' {
 	}
 
 }
-declare module 'dsteem/helpers/blockchain' {
+declare module 'dpayts/helpers/blockchain' {
 	/**
-	 * @file Steem blockchain helpers.
+	 * @file DPay blockchain helpers.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
 	 * @license
 	 * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
@@ -1816,9 +1816,9 @@ declare module 'dsteem/helpers/blockchain' {
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
 	/// <reference types="node" />
-	import { Client } from 'dsteem/client';
-	import { BlockHeader, SignedBlock } from 'dsteem/steem/block';
-	import { AppliedOperation } from 'dsteem/steem/operation';
+	import { Client } from 'dpayts/client';
+	import { BlockHeader, SignedBlock } from 'dpayts/dpay/block';
+	import { AppliedOperation } from 'dpayts/dpay/operation';
 	export enum BlockchainMode {
 	    /**
 	     * Only get irreversible blocks.
@@ -1887,7 +1887,7 @@ declare module 'dsteem/helpers/blockchain' {
 	}
 
 }
-declare module 'dsteem/helpers/broadcast' {
+declare module 'dpayts/helpers/broadcast' {
 	/**
 	 * @file Broadcast API helpers.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
@@ -1922,12 +1922,12 @@ declare module 'dsteem/helpers/broadcast' {
 	 * You acknowledge that this software is not designed, licensed or intended for use
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
-	import { Client } from 'dsteem/client';
-	import { PrivateKey, PublicKey } from 'dsteem/crypto';
-	import { AuthorityType } from 'dsteem/steem/account';
-	import { Asset } from 'dsteem/steem/asset';
-	import { AccountUpdateOperation, CommentOperation, CommentOptionsOperation, CustomJsonOperation, DelegateVestingSharesOperation, Operation, TransferOperation, VoteOperation } from 'dsteem/steem/operation';
-	import { SignedTransaction, Transaction, TransactionConfirmation } from 'dsteem/steem/transaction';
+	import { Client } from 'dpayts/client';
+	import { PrivateKey, PublicKey } from 'dpayts/crypto';
+	import { AuthorityType } from 'dpayts/dpay/account';
+	import { Asset } from 'dpayts/dpay/asset';
+	import { AccountUpdateOperation, CommentOperation, CommentOptionsOperation, CustomJsonOperation, DelegateVestingSharesOperation, Operation, TransferOperation, VoteOperation } from 'dpayts/dpay/operation';
+	import { SignedTransaction, Transaction, TransactionConfirmation } from 'dpayts/dpay/transaction';
 	export interface CreateAccountOptions {
 	    /**
 	     * Username for the new account.
@@ -2055,7 +2055,7 @@ declare module 'dsteem/helpers/broadcast' {
 	}
 
 }
-declare module 'dsteem/helpers/database' {
+declare module 'dpayts/helpers/database' {
 	/**
 	 * @file Database API helpers.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
@@ -2090,15 +2090,15 @@ declare module 'dsteem/helpers/database' {
 	 * You acknowledge that this software is not designed, licensed or intended for use
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
-	import { Client } from 'dsteem/client';
-	import { ExtendedAccount } from 'dsteem/steem/account';
-	import { Price } from 'dsteem/steem/asset';
-	import { BlockHeader, SignedBlock } from 'dsteem/steem/block';
-	import { Discussion } from 'dsteem/steem/comment';
-	import { DynamicGlobalProperties } from 'dsteem/steem/misc';
-	import { ChainProperties, VestingDelegation } from 'dsteem/steem/misc';
-	import { AppliedOperation } from 'dsteem/steem/operation';
-	import { SignedTransaction, TransactionConfirmation } from 'dsteem/steem/transaction';
+	import { Client } from 'dpayts/client';
+	import { ExtendedAccount } from 'dpayts/dpay/account';
+	import { Price } from 'dpayts/dpay/asset';
+	import { BlockHeader, SignedBlock } from 'dpayts/dpay/block';
+	import { Discussion } from 'dpayts/dpay/comment';
+	import { DynamicGlobalProperties } from 'dpayts/dpay/misc';
+	import { ChainProperties, VestingDelegation } from 'dpayts/dpay/misc';
+	import { AppliedOperation } from 'dpayts/dpay/operation';
+	import { SignedTransaction, TransactionConfirmation } from 'dpayts/dpay/transaction';
 	/**
 	 * Possible categories for `get_discussions_by_*`.
 	 */
@@ -2154,7 +2154,7 @@ declare module 'dsteem/helpers/database' {
 	     */
 	    getState(path: string): Promise<any>;
 	    /**
-	     * Return median price in SBD for 1 STEEM as reported by the witnesses.
+	     * Return median price in BBD for 1 BEX as reported by the witnesses.
 	     */
 	    getCurrentMedianHistoryPrice(): Promise<Price>;
 	    /**
@@ -2166,7 +2166,7 @@ declare module 'dsteem/helpers/database' {
 	    getVestingDelegations(account: string, from?: string, limit?: number): Promise<VestingDelegation[]>;
 	    /**
 	     * Return server config. See:
-	     * https://github.com/steemit/steem/blob/master/libraries/protocol/include/steemit/protocol/config.hpp
+	     * https://github.com/dpays/dpay/blob/master/libraries/protocol/include/dpayit/protocol/config.hpp
 	     */
 	    getConfig(): Promise<{
 	        [name: string]: string | number | boolean;
@@ -2210,9 +2210,9 @@ declare module 'dsteem/helpers/database' {
 	}
 
 }
-declare module 'dsteem/client' {
+declare module 'dpayts/client' {
 	/**
-	 * @file Steem RPC client implementation.
+	 * @file DPay RPC client implementation.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
 	 * @license
 	 * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
@@ -2246,19 +2246,19 @@ declare module 'dsteem/client' {
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
 	/// <reference types="node" />
-	import { Blockchain } from 'dsteem/helpers/blockchain';
-	import { BroadcastAPI } from 'dsteem/helpers/broadcast';
-	import { DatabaseAPI } from 'dsteem/helpers/database';
+	import { Blockchain } from 'dpayts/helpers/blockchain';
+	import { BroadcastAPI } from 'dpayts/helpers/broadcast';
+	import { DatabaseAPI } from 'dpayts/helpers/database';
 	/**
 	 * Library version.
 	 */
 	export const VERSION: string;
 	/**
-	 * Main steem network chain id.
+	 * Main dpay network chain id.
 	 */
 	export const DEFAULT_CHAIN_ID: Buffer;
 	/**
-	 * Main steem network address prefix.
+	 * Main dpay network address prefix.
 	 */
 	export const DEFAULT_ADDRESS_PREFIX = "STM";
 	/**
@@ -2267,12 +2267,12 @@ declare module 'dsteem/client' {
 	 */
 	export interface ClientOptions {
 	    /**
-	     * Steem chain id. Defaults to main steem network:
+	     * DPay chain id. Defaults to main dpay network:
 	     * `0000000000000000000000000000000000000000000000000000000000000000`
 	     */
 	    chainId?: string;
 	    /**
-	     * Steem address prefix. Defaults to main steem network:
+	     * DPay address prefix. Defaults to main dpay network:
 	     * `STM`
 	     */
 	    addressPrefix?: string;
@@ -2310,7 +2310,7 @@ declare module 'dsteem/client' {
 	     */
 	    readonly options: ClientOptions;
 	    /**
-	     * Address to Steem RPC server, *read-only*.
+	     * Address to DPay RPC server, *read-only*.
 	     */
 	    readonly address: string;
 	    /**
@@ -2337,7 +2337,7 @@ declare module 'dsteem/client' {
 	    private timeout;
 	    private backoff;
 	    /**
-	     * @param address The address to the Steem RPC server, e.g. `https://api.steemit.com`.
+	     * @param address The address to the DPay RPC server, e.g. `https://api.dpays.io`.
 	     * @param options Client options.
 	     */
 	    constructor(address: string, options?: ClientOptions);
@@ -2353,9 +2353,9 @@ declare module 'dsteem/client' {
 	}
 
 }
-declare module 'dsteem' {
+declare module 'dpayts' {
 	/**
-	 * @file dsteem exports.
+	 * @file dpayts exports.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
 	 * @license
 	 * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
@@ -2388,25 +2388,25 @@ declare module 'dsteem' {
 	 * You acknowledge that this software is not designed, licensed or intended for use
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
-	import * as utils from 'dsteem/utils';
+	import * as utils from 'dpayts/utils';
 	export { utils };
-	export * from 'dsteem/helpers/blockchain';
-	export * from 'dsteem/helpers/database';
-	export * from 'dsteem/steem/account';
-	export * from 'dsteem/steem/asset';
-	export * from 'dsteem/steem/block';
-	export * from 'dsteem/steem/comment';
-	export * from 'dsteem/steem/misc';
-	export * from 'dsteem/steem/operation';
-	export * from 'dsteem/steem/serializer';
-	export * from 'dsteem/steem/transaction';
-	export * from 'dsteem/client';
-	export * from 'dsteem/crypto';
+	export * from 'dpayts/helpers/blockchain';
+	export * from 'dpayts/helpers/database';
+	export * from 'dpayts/dpay/account';
+	export * from 'dpayts/dpay/asset';
+	export * from 'dpayts/dpay/block';
+	export * from 'dpayts/dpay/comment';
+	export * from 'dpayts/dpay/misc';
+	export * from 'dpayts/dpay/operation';
+	export * from 'dpayts/dpay/serializer';
+	export * from 'dpayts/dpay/transaction';
+	export * from 'dpayts/client';
+	export * from 'dpayts/crypto';
 
 }
-declare module 'dsteem/index-browser' {
+declare module 'dpayts/index-browser' {
 	/**
-	 * @file dsteem entry point for browsers.
+	 * @file dpayts entry point for browsers.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
 	 * @license
 	 * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
@@ -2447,12 +2447,12 @@ declare module 'dsteem/index-browser' {
 	import 'core-js/modules/es7.symbol.async-iterator';
 	import 'regenerator-runtime/runtime';
 	import 'whatwg-fetch';
-	export * from 'dsteem';
+	export * from 'dpayts';
 
 }
-declare module 'dsteem/index-node' {
+declare module 'dpayts/index-node' {
 	/**
-	 * @file dsteem entry point for node.js.
+	 * @file dpayts entry point for node.js.
 	 * @author Johan Nordberg <code@johan-nordberg.com>
 	 * @license
 	 * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
@@ -2486,6 +2486,6 @@ declare module 'dsteem/index-node' {
 	 * in the design, construction, operation or maintenance of any military facility.
 	 */
 	import 'core-js/modules/es7.symbol.async-iterator';
-	export * from 'dsteem';
+	export * from 'dpayts';
 
 }

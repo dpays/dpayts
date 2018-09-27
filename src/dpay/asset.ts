@@ -1,5 +1,5 @@
 /**
- * @file Steem asset type definitions and helpers.
+ * @file DPay asset type definitions and helpers.
  * @author Johan Nordberg <code@johan-nordberg.com>
  * @license
  * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
@@ -39,19 +39,19 @@ import * as ByteBuffer from 'bytebuffer'
 /**
  * Asset symbol string.
  */
-export type AssetSymbol = 'STEEM' | 'VESTS' | 'SBD' | 'TESTS' | 'TBD'
+export type AssetSymbol = 'BEX' | 'VESTS' | 'BBD' | 'TESTS' | 'TBD'
 
 /**
- * Class representing a steem asset, e.g. `1.000 STEEM` or `12.112233 VESTS`.
+ * Class representing a bex asset, e.g. `1.000 BEX` or `12.112233 VESTS`.
  */
 export class Asset {
 
     /**
-     * Create a new Asset instance from a string, e.g. `42.000 STEEM`.
+     * Create a new Asset instance from a string, e.g. `42.000 BEX`.
      */
     public static fromString(string: string, expectedSymbol?: AssetSymbol) {
         const [amountString, symbol] = string.split(' ')
-        if (['STEEM', 'VESTS', 'SBD', 'TESTS', 'TBD'].indexOf(symbol) === -1) {
+        if (['BEX', 'VESTS', 'BBD', 'TESTS', 'TBD'].indexOf(symbol) === -1) {
             throw new Error(`Invalid asset symbol: ${ symbol }`)
         }
         if (expectedSymbol && symbol !== expectedSymbol) {
@@ -76,7 +76,7 @@ export class Asset {
              }
              return value
          } else if (typeof value === 'number' && Number.isFinite(value)) {
-             return new Asset(value, symbol || 'STEEM')
+             return new Asset(value, symbol || 'BEX')
          } else if (typeof value === 'string') {
              return Asset.fromString(value, symbol)
          } else {
@@ -109,8 +109,8 @@ export class Asset {
         switch (this.symbol) {
             case 'TESTS':
             case 'TBD':
-            case 'STEEM':
-            case 'SBD':
+            case 'BEX':
+            case 'BBD':
                 return 3
             case 'VESTS':
                 return 6
@@ -118,7 +118,7 @@ export class Asset {
     }
 
     /**
-     * Return a string representation of this asset, e.g. `42.000 STEEM`.
+     * Return a string representation of this asset, e.g. `42.000 BEX`.
      */
     public toString(): string {
         return `${ this.amount.toFixed(this.getPrecision()) } ${ this.symbol }`

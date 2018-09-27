@@ -4,7 +4,7 @@ import * as https from 'https'
 import {randomBytes} from 'crypto'
 
 export const IS_BROWSER = global['isBrowser'] === true
-export const TEST_NODE = process.env['TEST_NODE'] || 'https://api.steemit.com'
+export const TEST_NODE = process.env['TEST_NODE'] || 'https://api.dpays.io'
 
 export const agent = IS_BROWSER ? undefined : new https.Agent({keepAlive: true})
 

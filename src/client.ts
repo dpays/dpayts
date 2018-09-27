@@ -1,5 +1,5 @@
 /**
- * @file Steem RPC client implementation.
+ * @file DPay RPC client implementation.
  * @author Johan Nordberg <code@johan-nordberg.com>
  * @license
  * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
@@ -48,14 +48,14 @@ import {copy, retryingFetch, waitForEvent} from './utils'
 export const VERSION = packageVersion
 
 /**
- * Main steem network chain id.
+ * Main dpay network chain id.
  */
 export const DEFAULT_CHAIN_ID = Buffer.from('0000000000000000000000000000000000000000000000000000000000000000', 'hex')
 
 /**
- * Main steem network address prefix.
+ * Main dpay network address prefix.
  */
-export const DEFAULT_ADDRESS_PREFIX = 'STM'
+export const DEFAULT_ADDRESS_PREFIX = 'DWB'
 
 interface RPCRequest {
     /**
@@ -112,12 +112,12 @@ interface PendingRequest {
  */
 export interface ClientOptions {
     /**
-     * Steem chain id. Defaults to main steem network:
+     * DPay chain id. Defaults to main dpay network:
      * `0000000000000000000000000000000000000000000000000000000000000000`
      */
     chainId?: string
     /**
-     * Steem address prefix. Defaults to main steem network:
+     * DPay address prefix. Defaults to main dpay network:
      * `STM`
      */
     addressPrefix?: string
@@ -158,9 +158,9 @@ export class Client {
             opts.agent = options.agent
         }
 
-        opts.addressPrefix = 'TST'
+        opts.addressPrefix = 'DWT'
         opts.chainId = '46d82ab7d8db682eb1959aed0ada039a6d49afa1602491f93dde9cac3e8e6c32'
-        return new Client('https://testnet.steemitdev.com', opts)
+        return new Client('https://d.djackson.network', opts)
     }
 
     /**
@@ -169,7 +169,7 @@ export class Client {
     public readonly options: ClientOptions
 
     /**
-     * Address to Steem RPC server, *read-only*.
+     * Address to DPay RPC server, *read-only*.
      */
     public readonly address: string
 
@@ -203,7 +203,7 @@ export class Client {
     private backoff: typeof defaultBackoff
 
     /**
-     * @param address The address to the Steem RPC server, e.g. `https://api.steemit.com`.
+     * @param address The address to the DPay RPC server, e.g. `https://api.dpays.io`.
      * @param options Client options.
      */
     constructor(address: string, options: ClientOptions = {}) {
@@ -247,7 +247,7 @@ export class Client {
         const opts: any = {
             body,
             cache: 'no-cache',
-            headers: {'User-Agent': `dsteem/${ packageVersion }`},
+            headers: {'User-Agent': `dpayts/${ packageVersion }`},
             method: 'POST',
             mode: 'cors',
         }

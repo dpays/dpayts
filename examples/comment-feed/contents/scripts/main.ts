@@ -1,9 +1,9 @@
 
-import {Client, BlockchainMode} from 'dsteem'
+import {Client, BlockchainMode} from 'dpayts'
 
 import * as removeMarkdown from 'remove-markdown'
 
-const client = new Client('https://api.steemit.com')
+const client = new Client('https://api.dpays.io')
 
 function sleep(ms: number): Promise<void> {
     return new Promise<void>((resolve) => {
@@ -28,7 +28,7 @@ function buildComment(comment: any): HTMLDivElement {
 
     rv.innerHTML += `
         <span class="author">
-            <a href="https://steemit.com/@${ author }" target="_blank">@${ author }</a>
+            <a href="https://dsite.io/@${ author }" target="_blank">@${ author }</a>
         </span>
         <span class="body">${ shortBody(body) }</span>
     `

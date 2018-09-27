@@ -1,14 +1,14 @@
 {
-  "name": "@steemit/dsteem",
-  "version": "0.10.1",
-  "description": "Steem blockchain RPC client library",
-  "author": "Johan Nordberg",
+  "name": "dpayts",
+  "version": "0.1.1",
+  "description": "dPay blockchain RPC client library",
+  "author": "dPay Labs",
   "license": "BSD-3-Clause",
   "main": "./lib/index-node",
   "typings": "./lib/index",
   "browser": {
-    "./lib/index-node": "./dist/dsteem.js",
-    "./src/index-node": "./dist/dsteem.js",
+    "./lib/index-node": "./dist/dpayts.js",
+    "./src/index-node": "./dist/dpayts.js",
     "./src/version": "./lib/version.js"
   },
   "files": [
@@ -17,7 +17,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/jnordberg/dsteem"
+    "url": "https://github.com/dpays/dpayts"
   },
   "scripts": {
     "test": "make ci-test",
@@ -27,8 +27,8 @@
     "blockchain",
     "client",
     "rpc",
-    "steem",
-    "steemit"
+    "dpay",
+    "dsite"
   ],
   "dependencies": {
     "bs58": "^4.0.1",

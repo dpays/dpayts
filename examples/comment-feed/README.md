@@ -1,8 +1,8 @@
 
-dsteem comment feed example
+dpayts comment feed example
 ===========================
 
-Running on: <https://comments.steem.vc>
+Running on: <https://comments.dpaydev.io>
 
 
 Developing
@@ -37,4 +37,4 @@ Static output will be in the `build/` folder ready to be copied to a webserver.
 ---
 
 
-Built with [Wintersmith](https://github.com/jnordberg/wintersmith).
+Built with [Wintersmith](https://github.com/dpays/wintersmith).

@@ -63,7 +63,7 @@ describe('operations', function() {
         assert.deepEqual(JSON.parse(tx.operations[0][1].json), data)
     })
 
-    it('should transfer steem', async function() {
+    it('should transfer BEX', async function() {
         const [acc2bf] = await client.database.getAccounts([acc2.username])
         await client.broadcast.transfer({
             from: acc1.username,
@@ -92,7 +92,7 @@ describe('operations', function() {
 
         const [newAcc] = await client.database.getAccounts([username])
         assert.equal(newAcc.name, username)
-        // not sure why but on the testnet the recovery account is always 'steem'
+        // not sure why but on the testnet the recovery account is always 'dpay'
         // assert.equal(newAcc.recovery_account, acc1.username)
         const postingWif = PrivateKey.fromLogin(username, password, 'posting')
         const postingPub = postingWif.createPublic(client.addressPrefix).toString()
@@ -114,7 +114,7 @@ describe('operations', function() {
             permlink, author: username,
             allow_votes: false,
             allow_curation_rewards: false,
-            percent_steem_dollars: 0,
+            percent_dpay_dollars: 0,
             max_accepted_payout: Asset.from(10, 'TBD'),
             extensions: [
                 [0, {beneficiaries: [
@@ -126,7 +126,7 @@ describe('operations', function() {
         const [post] = await client.call('condenser_api', 'get_content', [username, permlink])
         assert.deepEqual(post.beneficiaries, [{account: acc1.username, weight: 10000}])
         assert.equal(post.max_accepted_payout, '10.000 TBD')
-        assert.equal(post.percent_steem_dollars, 0)
+        assert.equal(post.percent_dpay_dollars, 0)
         assert.equal(post.allow_votes, false)
     })
     */

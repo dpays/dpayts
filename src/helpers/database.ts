@@ -34,14 +34,14 @@
  */
 
 import {Client} from './../client'
-import {ExtendedAccount} from './../steem/account'
-import {Asset, Price} from './../steem/asset'
-import {BlockHeader, SignedBlock} from './../steem/block'
-import {Discussion} from './../steem/comment'
-import {DynamicGlobalProperties} from './../steem/misc'
-import {ChainProperties, VestingDelegation} from './../steem/misc'
-import {AppliedOperation} from './../steem/operation'
-import {SignedTransaction, Transaction, TransactionConfirmation} from './../steem/transaction'
+import {ExtendedAccount} from './../dpay/account'
+import {Asset, Price} from './../dpay/asset'
+import {BlockHeader, SignedBlock} from './../dpay/block'
+import {Discussion} from './../dpay/comment'
+import {DynamicGlobalProperties} from './../dpay/misc'
+import {ChainProperties, VestingDelegation} from './../dpay/misc'
+import {AppliedOperation} from './../dpay/operation'
+import {SignedTransaction, Transaction, TransactionConfirmation} from './../dpay/transaction'
 
 /**
  * Possible categories for `get_discussions_by_*`.
@@ -114,7 +114,7 @@ export class DatabaseAPI {
     }
 
     /**
-     * Return median price in SBD for 1 STEEM as reported by the witnesses.
+     * Return median price in BBD for 1 BEX as reported by the witnesses.
      */
     public async getCurrentMedianHistoryPrice(): Promise<Price> {
         return Price.from(await this.call('get_current_median_history_price'))
@@ -134,7 +134,7 @@ export class DatabaseAPI {
 
     /**
      * Return server config. See:
-     * https://github.com/steemit/steem/blob/master/libraries/protocol/include/steemit/protocol/config.hpp
+     * https://github.com/dpays/dpay/blob/master/libraries/protocol/include/dpayit/protocol/config.hpp
      */
     public getConfig(): Promise<{[name: string]: string|number|boolean}> {
         return this.call('get_config')

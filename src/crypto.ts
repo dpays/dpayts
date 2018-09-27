@@ -1,5 +1,5 @@
 /**
- * @file Steem crypto helpers.
+ * @file DPay crypto helpers.
  * @author Johan Nordberg <code@johan-nordberg.com>
  * @license
  * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
@@ -41,8 +41,8 @@ import * as secp256k1 from 'secp256k1'
 import {VError} from 'verror'
 
 import {DEFAULT_ADDRESS_PREFIX, DEFAULT_CHAIN_ID} from './client'
-import {Types} from './steem/serializer'
-import {SignedTransaction, Transaction} from './steem/transaction'
+import {Types} from './dpay/serializer'
+import {SignedTransaction, Transaction} from './dpay/transaction'
 import {copy} from './utils'
 
 /**

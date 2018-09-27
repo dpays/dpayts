@@ -1,5 +1,5 @@
 /**
- * @file Steem blockchain helpers.
+ * @file DPay blockchain helpers.
  * @author Johan Nordberg <code@johan-nordberg.com>
  * @license
  * Copyright (c) 2017 Johan Nordberg. All Rights Reserved.
@@ -34,8 +34,8 @@
  */
 
 import {Client} from './../client'
-import {BlockHeader, SignedBlock} from './../steem/block'
-import {AppliedOperation} from './../steem/operation'
+import {BlockHeader, SignedBlock} from './../dpay/block'
+import {AppliedOperation} from './../dpay/operation'
 import {iteratorStream, sleep} from './../utils'
 
 export enum BlockchainMode {
@@ -102,7 +102,7 @@ export class Blockchain {
      */
     public async *getBlockNumbers(options?: BlockchainStreamOptions|number) {
         // const config = await this.client.database.getConfig()
-        // const interval = config['STEEMIT_BLOCK_INTERVAL'] as number
+        // const interval = config['DPAY_BLOCK_INTERVAL'] as number
         const interval = 3
         if (!options) {
             options = {}

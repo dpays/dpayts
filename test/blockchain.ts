@@ -46,7 +46,7 @@ describe('blockchain', function() {
     })
 
     /*
-    // TODO: disabled for steem#2936
+    // TODO: disabled for dpay#2936
     it('should yield operations', async function() {
         let ops: string[] = []
         for await (const operation of client.blockchain.getOperations({from: 13300000, to: 13300001})) {
@@ -57,7 +57,7 @@ describe('blockchain', function() {
     */
 
     /*
-    // TODO: disabled for steem#2936
+    // TODO: disabled for dpay#2936
     it('should stream operations', async function() {
         await new Promise((resolve, reject) => {
             const stream = client.blockchain.getOperationsStream({from: 13300000, to: 13300001})

@@ -82,7 +82,7 @@ describe('operations', function() {
     //       only because `comment` fails on an RC error.
     it('should create account and post with options', async function() {
         // ensure not testing accounts on mainnet
-        assert(client.chainId.toString('hex') !== '0000000000000000000000000000000000000000000000000000000000000000')
+        assert(client.chainId.toString('hex') !== '38f14b346eb697ba04ae0f5adcfaa0a437ed3711197704aa256a14cb9b4a8f26')
 
         const username = 'ds-' + randomString(12)
         const password = randomString(32)
@@ -176,7 +176,7 @@ describe('operations', function() {
         const creator = acc1.username
 
         // ensure not testing accounts on mainnet
-        assert(client.chainId.toString('hex') !== '0000000000000000000000000000000000000000000000000000000000000000')
+        assert(client.chainId.toString('hex') !== '38f14b346eb697ba04ae0f5adcfaa0a437ed3711197704aa256a14cb9b4a8f26')
 
         const chainProps = await client.database.getChainProperties()
         const creationFee = Asset.from(chainProps.account_creation_fee)
